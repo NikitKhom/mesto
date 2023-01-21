@@ -9,7 +9,7 @@ editButton.addEventListener('click', function(){
     popup.classList.remove('popup_hidden');
 });
 
-//Оюъявляю соответствующие параметры страницы и popup
+//Объявляю соответствующие параметры страницы и popup
 let name = content.querySelector('.popup__text-field_name');
 let info = content.querySelector('.popup__text-field_info');
 let profileName = content.querySelector('.profile__name');
@@ -32,6 +32,30 @@ exitButton.addEventListener('click', function() {
     info.value = profileInfo.textContent;
 });
 
+// Находим форму в DOM
+let formElement = content.querySelector('#form')
+// Находим поля формы в DOM
+let nameInput = content.querySelector('.popup__text-field_name');
+let jobInput = content.querySelector('.popup__text-field_info');
+
+// Обработчик «отправки» формы, хотя пока
+// она никуда отправляться не будет
+function handleFormSubmit (evt) {
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                                                // Так мы можем определить свою логику отправки.
+                                                // О том, как это делать, расскажем позже.
+
+    // Получите значение полей jobInput и nameInput из свойства value
+    profileName.textContent = nameInput.value;
+    profileInfo.textContent = jobInput.value;
+    // Выберите элементы, куда должны быть вставлены значения полей
+
+    // Вставьте новые значения с помощью textContent
+}
+
+// Прикрепляем обработчик к форме:
+// он будет следить за событием “submit” - «отправка»
+formElement.addEventListener('submit', handleFormSubmit); 
 
 
 
