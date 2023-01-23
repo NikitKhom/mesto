@@ -2,7 +2,6 @@
     background-color: white;
     color: black;
     width: 430px;
-    height: 330px;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     display: flex;
@@ -14,6 +13,5 @@
 @media (max-width: 768px) {
     .popup__content {
         width: 282px;
-        height: 322px;
     }
 }

@@ -5,3 +5,7 @@
     width: 22px;
     height: 19px;
 }
+
+.cards__like-button:hover {
+    opacity: .5;
+}

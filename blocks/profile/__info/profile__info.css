@@ -6,7 +6,6 @@
 
 @media (max-width: 768px) {
     .profile__info {
-        display: grid;
         grid-template-columns: 235px 47px;
         grid-template-rows: 33px 25px;
     }
