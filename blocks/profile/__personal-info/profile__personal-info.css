@@ -13,12 +13,14 @@
 @media (max-width: 1024px) {
     .profile__personal-info {
         justify-self: center;
-        margin-top: 10px;
+        margin-top: 5px;
+        max-width: 280px;
     }
 }
 
 @media (max-width: 768px) {
     .profile__personal-info {
+        margin-top: 10px;
         font-size: 14px;
         line-height: 17px;
     }

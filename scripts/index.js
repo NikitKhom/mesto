@@ -20,8 +20,7 @@ function popupClose() {
 editButton.addEventListener('click', popupOpen);
 exitButton.addEventListener('click', popupClose);
 
-let formElement = content.querySelector('.popup__content');
-console.log(formElement);
+let formElement = content.querySelector('.popup__form');
 
 function handleFormSubmit (evt) {
     evt.preventDefault(); 
