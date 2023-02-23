@@ -35,8 +35,7 @@ function handlePopupCloseEsc(evt) {
   }
 }
 
-document.addEventListener('keydown', handlePopupCloseEsc); //закрытие по кнопке esc реализовал через слушатель на весь document, который перед тем как закрыть popup проверяет, есть ли открытый.
-
+ 
 function openProfilePopup() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -47,10 +46,12 @@ function openProfilePopup() {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handlePopupCloseEsc);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handlePopupCloseEsc);
 }
 
 editButton.addEventListener('click', openProfilePopup);
@@ -119,8 +120,8 @@ function handleNewItemFormSubmit (evt) {
     }
     const card = createCard(item);
     cardsBlock.prepend(card);
-    evt.target.reset()
     closePopup(popupNewItem);
+    evt.target.reset();
 }
 
 
