@@ -11,6 +11,31 @@ const formNewItem = popupNewItem.querySelector('.popup__form');
 const addButton = content.querySelector('.profile__add-button');
 const titleInput = popupNewItem.querySelector('.popup__text-field_type_title');
 const linkInput = popupNewItem.querySelector('.popup__text-field_type_link');
+const popupOverlay = Array.from(document.querySelectorAll('.popup'));
+
+const detectClickOverlay = (evt) => {
+  const target = evt.target;
+  console.log(target);
+  if (target.classList.contains('popup')) {
+    closePopup(target);
+  }
+}
+
+popupOverlay.forEach((popup) => {
+  popup.addEventListener('click', detectClickOverlay);
+});
+
+
+function handlePopupCloseEsc(evt) {
+  if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_opened');
+      if (openedPopup) {
+          openedPopup.classList.remove('popup_opened');
+      }
+  }
+}
+
+document.addEventListener('keydown', handlePopupCloseEsc); //закрытие по кнопке esc реализовал через слушатель на весь document, который перед тем как закрыть popup проверяет, есть ли открытый.
 
 function openProfilePopup() {
   nameInput.value = profileName.textContent;
