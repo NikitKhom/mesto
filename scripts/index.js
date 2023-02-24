@@ -15,7 +15,6 @@ const popupOverlay = Array.from(document.querySelectorAll('.popup'));
 
 const detectClickOverlay = (evt) => {
   const target = evt.target;
-  console.log(target);
   if (target.classList.contains('popup')) {
     closePopup(target);
   }
@@ -35,10 +34,13 @@ function handlePopupCloseEsc(evt) {
   }
 }
 
- 
+
+
+
 function openProfilePopup() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
+  resetValidation(formProfile, formProfile.querySelector('.popup__save-button'));
   openPopup(popupProfile);
 }
 
@@ -56,7 +58,10 @@ function closePopup(popup) {
 
 editButton.addEventListener('click', openProfilePopup);
 
-addButton.addEventListener('click', () => openPopup(popupNewItem));
+addButton.addEventListener('click', () => {
+  makeButtonDisabled(formNewItem.querySelector('.popup__save-button'));
+  openPopup(popupNewItem);
+});
 
 
 const closeButtons = document.querySelectorAll('.popup__close-button');
