@@ -52,7 +52,7 @@ export class FormValidator {
     
     resetValidation() {
         this._removeInputInvalidClass();
-        this._makeButtonActive();
+        this._toggleButtonState();
     } 
     
     _toggleButtonState() {
