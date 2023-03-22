@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./pages/index.css" rel="stylesheet">
   <script type = "module" src="./scripts/index.js" async></script>
-  <script type = "module" src="./scripts/FormValidator.js" async></script>
-  <script type = "module" src="./scripts/Card.js" async></script>
+  <script type = "module" src="./components/FormValidator.js" async></script>
+  <script type = "module" src="./components/Card.js" async></script>
 
   
   <title>Место</title>
@@ -37,9 +37,9 @@
             <form class="popup__form" name="profileForm" novalidate>
                 <fieldset class="popup__set">
                     <input class="popup__text-field popup__text-field_type_name" id="name" type="text" value="Жак-Ив Кусто" name="name" required placeholder="Имя" minlength="2" maxlength="40">
-                    <span class="popup__input-error name-error">bybyb</span>
+                    <span class="popup__input-error name-error"></span>
                     <input class="popup__text-field popup__text-field_type_job" id="job" type="text" value="Исследователь океана" name="job" required placeholder="Работа" minlength="2" maxlength="200">
-                    <span class="popup__input-error job-error">bybyby</span>
+                    <span class="popup__input-error job-error"></span>
                     <button class="popup__save-button button popup__save-button_type_profile" type="submit">Сохранить</button>
                 </fieldset>
             </form>
@@ -56,7 +56,7 @@
                 <fieldset class="popup__set">
                     <input class="popup__text-field popup__text-field_type_title" id="title" type="text" value="" name="name" required placeholder="Название" minlength="2" maxlength="30">
                     <span class="popup__input-error title-error"></span>
-                    <input class="popup__text-field popup__text-field_type_link" id="link" type="url" value="" name="job" required placeholder="Ссылка на картинку">
+                    <input class="popup__text-field popup__text-field_type_link" id="link" type="url" value="" name="link" required placeholder="Ссылка на картинку">
                     <span class="popup__input-error link-error"></span>
                     <button class="popup__save-button button popup__save-button_type_new-item" type="submit">Создать</button>
                 </fieldset>
