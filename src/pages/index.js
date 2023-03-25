@@ -1,4 +1,4 @@
-import './pages/index.css';
+import './index.css';
 import {
   editButton,
   nameInput,
@@ -6,19 +6,21 @@ import {
   addButton,
   initialCards,
   cardsBlock,
+  profileName,
+  profileJob,
   selectors
-} from '../src/utils/constants.js'
-import FormValidator from '../src/components/FormValidator.js';
-import Card from '../src/components/Card.js';
-import Section from '../src/components/Section.js';
-import PopupWithForm from '../src/components/PopupWithForm.js';
-import PopupWithImage from '../src/components/PopupWithImage.js';
-import UserInfo from '../src/components/UserInfo.js';
+} from '../utils/constants.js'
+import FormValidator from '../components/FormValidator.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 
 const profileInfo = new UserInfo({
-  userName: 'Жак-Ив Кусто', 
-  userInfo: 'Исследователь океанов'
+  nameContainer: profileName,
+  infoContainer: profileJob
 });
 
 function handleCardClick(name, link) {
@@ -48,7 +50,6 @@ const popupNewItem = new PopupWithForm({
     const card = new Card(formData.name, formData.link, 'template', handleCardClick);
     cardsList.addItem(card.generateCard());
     popupNewItem.close();
-    newItemForm.makeButtonDisabled();
   }
 });
 
@@ -66,16 +67,23 @@ profileForm.enableValidation();
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item.name, item.link, 'template', handleCardClick);
+    const card = createCard(item);
     cardsList.addItem(card.generateCard());
     }
   },
   cardsBlock
 );
 
+function createCard(item) {
+  const cardElement = new Card(item.name, item.link, 'template', handleCardClick);
+return cardElement;
+}
+
 
 editButton.addEventListener('click', openProfilePopup);
 addButton.addEventListener('click', () => {
+  newItemForm.makeButtonDisabled();
+  newItemForm.resetValidation();
   popupNewItem.open();
 });
 
@@ -83,8 +91,9 @@ addButton.addEventListener('click', () => {
 
 
 function openProfilePopup() {
-  nameInput.value = profileInfo.getUserInfo().name;
-  jobInput.value = profileInfo.getUserInfo().info;
+  const {info, name} = profileInfo.getUserInfo()
+  nameInput.value = name;
+  jobInput.value = info;
   profileForm.resetValidation();
   popupProfile.open();
 }
