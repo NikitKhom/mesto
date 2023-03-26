@@ -47,8 +47,7 @@ const popupProfile = new PopupWithForm({
 const popupNewItem = new PopupWithForm({
   popupSelector: '.popup_type_new-item',
   submiter: (formData) => {
-    const card = new Card(formData.name, formData.link, 'template', handleCardClick);
-    cardsList.addItem(card.generateCard());
+    cardsList.addItem(createCard(formData));
     popupNewItem.close();
   }
 });
@@ -67,8 +66,7 @@ profileForm.enableValidation();
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = createCard(item);
-    cardsList.addItem(card.generateCard());
+    cardsList.addItem(createCard(item));
     }
   },
   cardsBlock
@@ -76,7 +74,7 @@ const cardsList = new Section({
 
 function createCard(item) {
   const cardElement = new Card(item.name, item.link, 'template', handleCardClick);
-return cardElement;
+  return cardElement.generateCard();
 }
 
 
