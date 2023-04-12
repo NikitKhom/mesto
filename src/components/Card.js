@@ -53,7 +53,7 @@ export default class Card {
     }
 
     _handleLikeListener() {
-        this._likeButton.addEventListener('click', () => {
+        this._likeButton.addEventListener('mousedown', () => {
             if (!this._likeButton.classList.contains('cards__like-button_active')) {
                 this._api
                 .putLike(this._cardId)
