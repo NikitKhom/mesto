@@ -17,11 +17,14 @@
     </header>
     <main>
         <section class="profile">
-            <img class="profile__avatar" src=<%=require('./images/jak-iv-kusto.jpg')%> alt="фото профиля">
+            <div class="profile__avatar">
+                <img class="profile__image" src=<%=require('./images/loading_icon.svg')%> alt="фото профиля">
+                <button class="profile__overlay button"></button>
+            </div>
             <div class="profile__info">
-                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <h1 class="profile__name"></h1>
                 <button class="profile__edit-button button" type="button"></button>
-                <p class="profile__personal-info">Исследователь океана</p>
+                <p class="profile__personal-info"></p>
             </div>
             <button class="profile__add-button button" type="button"></button>
         </section>
@@ -74,13 +77,38 @@
         </div>
     </div>
 
+    <div class="popup popup_type_avatar">
+        <div class="popup__content">
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form class="popup__form" name="avatarForm" novalidate>
+                <fieldset class="popup__set">
+                    <input class="popup__text-field popup__text-field_type_avatar" id="avatar" type="url" value="" name="avatar" required placeholder="Ссылка на картинку">
+                    <span class="popup__input-error avatar-error"></span>
+                    <button class="popup__save-button button popup__save-button_type_avatar" type="submit">Сохранить</button>
+                    <button class="popup__close-button button" type="submit"></button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_submit">
+        <div class="popup__content">
+            <h2 class="popup__title  popup__title_type_submit">Вы уверены?</h2>
+                <button class="popup__save-button button popup__save-button_type_submit" type="button">Да</button>
+                <button class="popup__close-button button" type="button"></button>
+        </div>
+    </div>
+
     <template class="template">
         <div class="cards__card">
             <button class="cards__delete-button button" type="button"></button>
             <img class="cards__image" src="#" alt="">
             <div class="cards__stuff">
                 <h2 class="cards__title"></h2>
-                <button class="cards__like-button button" type="button"></button>
+                <div class="cards__group">
+                    <button class="cards__like-button button" type="button"></button>
+                    <p class="cards__like-count">23</p>
+                </div>
             </div>
         </div>
     </template>
