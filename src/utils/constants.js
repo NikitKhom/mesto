@@ -10,6 +10,7 @@ export const addButton = content.querySelector('.profile__add-button');
 export const cardsBlock = content.querySelector('.cards');
 export const avatar = content.querySelector('.profile__image');
 export const changeAvatarButton = content.querySelector('.profile__overlay');
+export const deleteCardButton = content.querySelector('.popup__save-button_type_submit');
 export const selectors = {
   formSelector: '.popup__form',
   inputSelector: '.popup__text-field',

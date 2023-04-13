@@ -1,18 +1,17 @@
 
 
 export default class Card {
-    constructor(card, templateSelector, handleCardClick, popup, api) {
+    constructor(card, ownerId, templateSelector, {handleCardClick, handleCardRemove, handleLikeToggler}) {
         this._name = card.name;
         this._link = card.link;
         this._likes = card.likes;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
-        this._popup = popup;
-        this._popupDeleteButton = popup._popup.querySelector('.popup__save-button');
+        this._handleCardRemove = handleCardRemove;
+        this._handleLikeToggler = handleLikeToggler;
         this._cardId = card._id;
-        this._ownerId = 'f6fa8335e1701b65e52b5f8c';
+        this._ownerId = ownerId;
         this._haveDeleteButton = (card.owner._id === this._ownerId);
-        this._api = api;
     }
 
     _getTemplate() {
@@ -33,44 +32,14 @@ export default class Card {
 
     _handleDeleteCard() {
         this._deleteButton.addEventListener('click', () =>{
-            this._popup.open();
-            this._popupDeleteButton.addEventListener('click', () => {
-                this._api
-                .deleteCard(this._cardId)
-                .then(res => {
-                    this._element.remove();
-                    this._popup.close();
-                })
-                .catch(err => console.log(err));
-            })
-            
+            this._handleCardRemove(this._element, this._cardId)
         });
     }
 
-    _toogleLike(card) {
-        this._cardLikes.textContent = card.likes.length;
-        this._likeButton.classList.toggle('cards__like-button_active');
-    }
-
     _handleLikeListener() {
-        this._likeButton.addEventListener('mousedown', () => {
-            if (!this._likeButton.classList.contains('cards__like-button_active')) {
-                this._api
-                .putLike(this._cardId)
-                .then(res => {
-                    this._toogleLike(res);
-                })
-                .catch(err => console.log(err));
-            }
-            else {
-                this._api
-                .deleteLike(this._cardId)
-                .then(res => {
-                    this._toogleLike(res);
-                })
-                .catch(err => console.log(err));
-            }
-          })
+        this._likeButton.addEventListener('click', () => {
+            this._handleLikeToggler(this._likeButton, this._cardId, this._cardLikes);
+        })
     }
     
     generateCard() {
@@ -85,7 +54,7 @@ export default class Card {
         this._likeButton = this._element.querySelector('.cards__like-button');
         this._likes.forEach(item => {
             if (item._id === this._ownerId ) {
-                this._likeButton.classList.add('cards__like-button_active');
+                this._likeButton.classList.toggle('cards__like-button_active');
             }  
         });
         this._cardLikes.textContent = this._likes.length;

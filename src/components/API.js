@@ -5,131 +5,107 @@ export default class API {
     }
 
     getUserInfo(){
-        return fetch(`https://nomoreparties.co/v1/${this._cohortId}/users/me`, {
-            headers: {
-                authorization: this._token
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        return this._checkServerStatus(
+            fetch(`https://nomoreparties.co/v1/${this._cohortId}/users/me`, {
+                headers: {
+                    authorization: this._token
+                }
+            })
+        )
     }
 
     getCards(){
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards `, {
-            headers: {
-                authorization: this._token
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards`, {
+                headers: {
+                    authorization: this._token
+                }
+            })
+        )
     }
 
     changeUserInfo({userName, userInfo}) {
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me`, {
-            method: 'PATCH',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: userName,
-                about: userInfo
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me`, {
+                method: 'PATCH',
+                headers: {
+                    authorization: this._token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: userName,
+                    about: userInfo
+                })
             })
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        )
     }
 
     addCard({cardName, cardLink}) {
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards `, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: this._token
-            },
-            body: JSON.stringify({
-                name: cardName,
-                link: cardLink
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: this._token
+                },
+                body: JSON.stringify({
+                    name: cardName,
+                    link: cardLink
+                })
             })
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        )
     }
-
 
     deleteCard(cardId){
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: this._token
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: this._token
+                }
+            })
+        )
     }
 
-
     putLike(cardId){
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}/likes`, {
-            method: 'PUT',
-            headers: {
-                authorization: this._token
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}/likes`, {
+                method: 'PUT',
+                headers: {
+                    authorization: this._token
+                }
+            })
+        )
     }
 
     deleteLike(cardId){
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}/likes`, {
-            method: 'DELETE',
-            headers: {
-                authorization: this._token
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                return  res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${cardId}/likes`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: this._token
+                }
+            })
+        )
     }
 
     changeUserAvatar(userAvatar) {
-        return fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me/avatar`, {
-            method: 'PATCH',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                avatar: userAvatar
+        return this._checkServerStatus(
+            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me/avatar`, {
+                method: 'PATCH',
+                headers: {
+                    authorization: this._token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    avatar: userAvatar
+                })
             })
-        })
+        )
+    }
+
+    _checkServerStatus(promise) {
+        return promise
         .then(res => {
             if (res.ok) {
                 return  res.json();
@@ -137,7 +113,4 @@ export default class API {
             return Promise.reject(`Ошибка: ${res.status}`);
         })
     }
-
-
-
 }
