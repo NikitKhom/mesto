@@ -12,9 +12,11 @@ export default class UserInfo{
     }
 
     setUserInfo(info) {
-        this._avatarContainer.src = info.avatar;
-        this._nameContainer.textContent = info.name;
-        this._infoContainer.textContent = info.about;
-        this._ownerId = info._id;
+        if(info.name) {
+            this._avatarContainer.src = info.avatar;
+            this._nameContainer.textContent = info.name;
+            this._infoContainer.textContent = info.about;
+            this._ownerId = info._id;
+        }
     } 
 }

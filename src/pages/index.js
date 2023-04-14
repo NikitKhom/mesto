@@ -21,17 +21,12 @@ import UserInfo from '../components/UserInfo.js';
 import API from '../components/API';
 const api = new API({token: '36dd83f2-042c-49c6-87f3-0e8edbb54688', cohortId: 'cohort-63'});
 const apiInfo = api.getUserInfo();
+const apiCards = api.getCards();
 const profileInfo = new UserInfo({   //создание экземпляра класса для загрузки информациио пользователе
 	avatarContainer: avatar,
 	nameContainer: profileName,
 	infoContainer: profileJob
  });
-
-apiInfo
-.then(res => {
-	profileInfo.setUserInfo(res);
-})
-.catch(err => console.log(err))
 
 function handleCardRemove(card, cardId) {         //создание хендлеров для карточки
 	popupSubmit.setConfirmListener(card, cardId);
@@ -63,19 +58,18 @@ function handleLikeToggler(likeButton, cardId, likesContainer) {
 }
 
 const cardsList = new Section({                         //cоздание списка карточек
-	renderer: () => {
-		const apiCards = api.getCards();
-		Promise.all([apiInfo, apiCards])
-		.then(values => {
-			values[1].forEach(item => {
-				cardsList.addItem(createCard(item, values[0]._id));
-			});
-		})
-		.catch(err => console.log(err));
+	renderer: (card, ownerId) => {
+		cardsList.addItem(createCard(card, ownerId));
 	  }
 	},
-	cardsBlock);
-cardsList.renderItems();                            //рендер карточек
+	cardsBlock);      
+
+Promise.all([apiInfo, apiCards])
+	.then(values => {
+		profileInfo.setUserInfo(values[0]);
+		cardsList.renderItems(values[1].reverse(), values[0]._id);
+	})
+	.catch(err => console.log(err));
 
 function createCard(card, ownerId) {
 	const cardElement = new Card(card, ownerId,  'template', {handleCardClick, handleCardRemove, handleLikeToggler});  // функция создание карточки
@@ -96,7 +90,6 @@ validatorEditProfile.enableValidation();
 const popupProfile = new PopupWithForm({                 //создание попапов для взаимодействия со страницей
   popupSelector: '.popup_type_profile',
   submiter: (formData) => {
-	validatorEditProfile.disableSubmitButton();
 	popupProfile.renderLoading();
 	api
     .changeUserInfo({
@@ -104,6 +97,7 @@ const popupProfile = new PopupWithForm({                 //создание по
 		userInfo: formData.job
 	})
     .then(res => {
+		validatorEditProfile.disableSubmitButton();
         profileInfo.setUserInfo(res);
     })
 	.then(res => {
@@ -116,12 +110,12 @@ const popupProfile = new PopupWithForm({                 //создание по
 const popupNewItem = new PopupWithForm({
   popupSelector: '.popup_type_new-item',
   submiter: (formData) => {
-	validatorAddCard.disableSubmitButton();
 	popupNewItem.renderLoading();
 	api
     .addCard({cardName: formData.name, cardLink: formData.link})
     .then(res => {
-        cardsList.renderItems();
+		validatorAddCard.disableSubmitButton();
+		cardsList.addItem(createCard(res, res.owner._id));
     })
 	.then(res => {
 		popupNewItem.close();
@@ -133,10 +127,10 @@ const popupNewItem = new PopupWithForm({
 const popupAvatar = new PopupWithForm({
 	popupSelector: '.popup_type_avatar',
 	submiter: (formData) => {
-		validatorEditAvatar.disableSubmitButton();
 		popupAvatar.renderLoading();
 		api.changeUserAvatar(formData.avatar)
 		.then(res => {
+			validatorEditAvatar.disableSubmitButton();
 			avatar.src = res.avatar;
 			popupAvatar.close();
 		})
